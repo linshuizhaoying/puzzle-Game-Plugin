@@ -1,0 +1,87 @@
+<!doctype html> 
+<html> 
+<head> 
+    <meta charset="utf-8"> 
+    <title>🎁</title> 
+    <link rel="stylesheet" href="dist/css/default.css" media="screen">
+    <script>
+      (function (doc, win) {
+        var docEl = doc.documentElement,
+          isIOS = navigator.userAgent.match(/iphone|ipod|ipad/gi),
+          dpr = isIOS? Math.min(win.devicePixelRatio, 3) : 1,
+          dpr = window.top === window.self? dpr : 1, //被iframe引用时，禁止缩放
+          dpr = 1, // 首页引用IFRAME，强制为1
+          scale = 1 / dpr,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+        docEl.dataset.dpr = win.devicePixelRatio;
+        if(navigator.userAgent.match(/iphone/gi) && screen.width == 375 && win.devicePixelRatio == 2){
+          docEl.classList.add('iphone6')
+        }
+        if(navigator.userAgent.match(/iphone/gi) && screen.width == 414 && win.devicePixelRatio == 3){
+          docEl.classList.add('iphone6p')
+        }
+        var metaEl = doc.createElement('meta');
+        metaEl.name = 'viewport';
+        metaEl.content = 'initial-scale=' + scale + ',maximum-scale=' + scale + ', minimum-scale=' + scale;
+        docEl.firstElementChild.appendChild(metaEl);
+        var recalc = function () {
+            var width = docEl.clientWidth;
+            if (width / dpr > 640) {
+                width = 640 * dpr;
+            }
+            docEl.style.fontSize = 100 * (width / 640) + 'px';
+          };
+        recalc()
+        if (!doc.addEventListener) return;
+        // win.addEventListener(resizeEvt, recalc, false);
+      })(document, window);
+    </script>
+
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+
+    <style>
+      *{
+        margin:0;
+        padding:0;
+      }
+      body{
+        margin:0 auto;
+      }
+      .box{
+        text-align:center; width:100%;
+      }
+      
+      .main{
+        margin-top: 0.3rem;
+      }
+      .hide{
+        display: none;
+      }
+    </style>
+</head>
+
+
+<body>
+  <div id="app"></div>
+  
+  <canvas id="puzzleGame" width="315px" height="315px"></canvas>
+
+</body>
+
+<script src="jquery.min.js"></script>
+<script src="fastclick.js"></script>
+<script src="puzzle.js"></script>
+<script>
+  window.addEventListener( "load", function() {
+      FastClick.attach( document.body );
+  }, false );
+  $('#puzzleGame').puzzleGame({
+    'rank':"difficult",
+    'frontImg':"images/1.png",
+    "backImg":"images/2.png",
+    'rate':320/320
+  });
+
+
+</script>
+</html>
